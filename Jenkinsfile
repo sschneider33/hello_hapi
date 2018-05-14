@@ -22,7 +22,12 @@ pipeline {
                 sh 'npm test'
             }
         }
-        stage('Deploy') {
+    }
+}
+
+node {
+
+    stage('Deploy') {
       wrap([$class: 'KubectlBuildWrapper', caCertificate: '''-----BEGIN CERTIFICATE-----
 MIICyDCCAbCgAwIBAgIBADANBgkqhkiG9w0BAQsFADAVMRMwEQYDVQQDEwprdWJl
 cm5ldGVzMB4XDTE4MDUxMzIwNTIwNloXDTI4MDUxMDIwNTIwNlowFTETMBEGA1UE
@@ -41,7 +46,5 @@ XapmPeJUA6jzWAu046/QzYrj49hC2RAx58QqV7pMKVmXw6bsT51+lW5+d0+ph32s
 ydJHgvqMjgkt8jklxx18l4fBMI7TGAcSj5x7myZ/tn2d8xfq5jYQM7s01MM=
 -----END CERTIFICATE-----''', credentialsId: 'kube-dev', serverUrl: 'https://10.136.1.81:6443']) {
   sh 'kubectl set image deployment $deploymentName $deploymentName=$imageName:$TAG --record'
-       }
-     }
-  }
+    }
 }
