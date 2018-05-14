@@ -42,5 +42,6 @@ ydJHgvqMjgkt8jklxx18l4fBMI7TGAcSj5x7myZ/tn2d8xfq5jYQM7s01MM=
 -----END CERTIFICATE-----''', credentialsId: 'kube-dev', serverUrl: 'https://10.136.1.81:6443']) {
   sh 'kubectl set image deployment $deploymentName $deploymentName=$imageName:$TAG --record'
        }
-    }
+     }
+  }
 }
